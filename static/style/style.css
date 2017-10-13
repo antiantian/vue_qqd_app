@@ -1184,7 +1184,7 @@ border-radius: 17px;-moz-border-radius: 17px; -webkit-border-radius: 17px;}
 .ruletable td{ text-align: center;}
 .rulesCon table{ border-color:#fbdfd8;    border: 1px solid #fbdfd8; margin-top:0.3em; }
 .rulesCon table tr td{ padding:0.3em 0;}
-.noCoupon{ width:100%; height:100%; position:fixed; padding-top:3.583333333333333em;  z-index:10; bottom:0; left:0;}
+.noCoupon{ width:100%; height:100%; position:fixed; padding-top:3.583333333333333em;  z-index:10; bottom:0; left:0;pointer-events: none;}
 .noCoupon .divInner{ background:#ffffff; width:100%; height:100%;}
 .paddingCl{ padding-bottom:6.166666666666667em;}
 .couponBottom .noCoupon{ z-index:-1}
@@ -1532,6 +1532,8 @@ font-size: 1.166666666666667em;}
 /**开通账户*/
 .openAccount li{
   margin: 0.916em 1.25rem  0  1.25rem;
+  margin:0.916em auto 0 auto;
+  width:92%;
   position:relative;
   overflow:hidden;
 }
@@ -1622,14 +1624,19 @@ font-size: 1.166666666666667em;}
  color:white;
  margin-left:0.83em;
 }
+.accountSubmit{
+  width: 92%;
+  margin:0 auto;
+}
 .accountSubmit input[type=button]{
-  width:27.083em;
+  width:100%;
+  box-sizing: border-box;
   height:3.33em;
   background-color:#FA5527;
   color:white;
-  border: 0.041em solid #CACACA;
-  border-radius:1em;
-  margin-top:15.041em;
+  border: 0.041em solid #FA5527;
+  border-radius:35px;
+  margin-top:4em;
 }
 .openAccount a{
   display:block;
@@ -1834,12 +1841,7 @@ margin-top:4.33em;
 .recharqeMethod span label{
     color: #FA5527;
 }
-@media screen and (max-width: 360px) {
- #inputNumber{
-  width:16.083em!important;
- }
- .accountSubmit input[type=button]{
-  width:21.083em!important;
-   margin-top: 8.041em!important;
- }
- }
+
+.openAccount input.red,.openAccount div.red{
+   border: 1px solid #ff0000;
+}

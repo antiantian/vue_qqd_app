@@ -11,7 +11,7 @@ var express = require('express')
 var webpack = require('webpack')
 var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = require('./webpack.dev.conf')
-
+const route=require('./routes/mock');
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
 // automatically open browser, if not set will be false
@@ -19,7 +19,8 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 // Define HTTP proxies to your custom API backend
 // https://github.com/chimurai/http-proxy-middleware
 var proxyTable = config.dev.proxyTable
-
+//加载bodyParser 用来处理post提交过来的数据
+var bodyParser = require('body-parser');
 var app = express()
 var compiler = webpack(webpackConfig)
 
@@ -69,8 +70,10 @@ app.use(hotMiddleware)
 // serve pure static assets
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
+app.use(bodyParser.json());//解析前端请求过来的数据
+app.use(bodyParser.urlencoded({ extended:true}));//会自动在url后加上请求来的数据
 
-
+app.use('/api',route);  //mock假数据
 var uri = 'http://localhost:' + port
 
 var _resolve

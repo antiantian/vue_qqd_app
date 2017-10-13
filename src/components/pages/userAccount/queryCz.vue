@@ -1,7 +1,7 @@
 <template>
  <div>
   <div  v-if="DepositoryAccount===false">
-	<header-div message="存管账户" path="/"></header-div>
+	<header-div message="存管账户" goback="true"></header-div>
     <div class="fixTop">
 	  <div class="mid_con">
 		  <div class="noAccounttip">您还没有开通资金存管账户</div>
@@ -10,7 +10,7 @@
     </div>
   </div> 
   <div  v-if="DepositoryAccount===true">
-	<header-div message="充值" path="/" rulesBtn="true"></header-div>
+	<header-div message="充值" goback="true" rulesBtn="true"></header-div>
     <div class="fixTop">
 	  <div class="registerTable accoutDraw">
 	  	<ul class="registerList chargeList">
@@ -68,12 +68,9 @@
 			*钱趣多wap端充值使用上海银行的快捷充值服务，充值前请仔细阅读以下的提示内容。
 		</div>
 		<p>1.快捷支付仅支持绑定一张银行卡，绑定后将默认为唯一提现卡。</p>	
-    <p>2.为了确保您的资金安全，通过平台充值添加快捷卡后，之前绑定的取现卡不能再作为取现卡使用。一经绑定，其余银行卡自动解绑。</p>	
-    <p>3.如需解绑快捷银行卡，请至汇付官网-P2P账户查询系统进行解绑。具体操作流程可登陆钱趣多电脑端的银行卡管理进行查看。</p>
+		<p>2.为了确保您的资金安全，通过平台充值添加快捷卡后，之前绑定的取现卡不能再作为取现卡使用。一经绑定，其余银行卡自动解绑。</p>	
+		<p>3.如需解绑快捷银行卡，请至汇付官网-P2P账户查询系统进行解绑。具体操作流程可登陆钱趣多电脑端的银行卡管理进行查看。</p>
 	</div>
-	
-	
-	
 	 <div class="fixTop divAccountBank" v-show="showbanks" style="width:100%;height:100%;    position:fixed;left:0px;top:0px;right:0px;    bottom:0px;background:#f1f1f1;z-index:200">
 		<a @click="hideAccountBank" style="width:100%;background:#fa5527;position:" class="iconfont prePage">&#xe606;</a>
    		<ul class="accountBank" style="height: 93%; overflow-y: scroll; ">
@@ -151,12 +148,13 @@
          userCenterCz:function(){
             var changVal2 = this.picked;
 			var bankName = this.dataindex;
+			var insertCzMoney =this.money;
 			if(this.insertCzMoney()){
 				if(changVal2 == 0){ // 网银充值
-					window.open("/shyhApi/userRecharge?rechrgeAount="+$("#insertCzMoney").val()+"&rechargeType=0&rechrgeBankName="+bankName,'_self');
+					window.open("/shyhApi/userRecharge?rechrgeAount="+insertCzMoney+"&rechargeType=0&rechrgeBankName="+bankName,'_self');
 				}
 				if(changVal2 == 1){ // 快捷充值
-					window.open("/shyhApi/userRecharge?rechrgeAount="+$("#insertCzMoney").val()+"&rechargeType=1&rechrgeSmsSeq="+$("#smsSeq").val()+"&rechrgeSmsCode="+$("#inputNumber").val(),'_self');
+					window.open("/shyhApi/userRecharge?rechrgeAount="+insertCzMoney+"&rechargeType=1&rechrgeSmsSeq="+$("#smsSeq").val()+"&rechrgeSmsCode="+$("#inputNumber").val(),'_self');
 				}
 			}
          },

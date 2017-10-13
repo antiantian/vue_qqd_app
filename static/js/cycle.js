@@ -192,22 +192,22 @@ $(function(){
 	 	 })*/
  })
 /**objectName.html 投标法律弹出框**/
-$(function(){
-	   $(".objectTip").click(function(){
-	  	 $(".fixbg").show();
-	   	 $(".lawRules").addClass("on");
-	   	 return false;
-	   })
-	   $(".closeLaw").click(function(){
-	   	 $(".fixbg").hide();
-	   	 $(".lawRules").removeClass("on");
-	   	 return false;
-	   })
-	   $("body").click(function(){
-	   	 $(".fixbg").hide();
-	   	 $(".lawRules").removeClass("on");  
-	   })
-})
+// $(function(){
+// 	   $(".objectTip").click(function(){
+// 	  	 $(".fixbg").show();
+// 	   	 $(".lawRules").addClass("on");
+// 	   	 return false;
+// 	   })
+// 	   $(".closeLaw").click(function(){
+// 	   	 $(".fixbg").hide();
+// 	   	 $(".lawRules").removeClass("on");
+// 	   	 return false;
+// 	   })
+// 	   $("body").click(function(){
+// 	   	 $(".fixbg").hide();
+// 	   	 $(".lawRules").removeClass("on");  
+// 	   })
+// })
 /**项目详情**/
 $(function(){
 	var w=$(".projectBlock .imgBox").width();
@@ -224,21 +224,7 @@ $(function(){
 	 })
 	 
 })
-/**投资列表 tab**/
-$(function(){
-	$(".listTab p").click(function(){
-		  $(this).addClass("cur").siblings("p").removeClass("cur up down");
-		  var index=$(this).index();
-		  if(index!==0){
-		  	  if( $(this).hasClass("up")){
-				  	  $(this).addClass("down").removeClass("up");
-				  }else{
-				  	  $(this).addClass("up").removeClass("down");
-				  }
-		  }
 
-	})
-})
 /*     allOad($(".fixTop"),0) //网络不给力页面
 	   allOad($(".fixTop"),1)//加载页面
 	   allOad($(".fixTop"),2)//登录可见
@@ -247,23 +233,23 @@ function allOad(obj,type){
 		var htmlCode='';
 		  if(type==0){//网络不给力页面
 			      htmlCode='<div class="noCoupon vertical box_S"><div class="divInner">\
-					   <img src="images/zneet.png" style="width: 60%">\
+					   <img src="/static/images/zneet.png" style="width: 60%">\
 					   <p>网络不给力，人家出不来啦～！</p>\
 					  <a href="#" class="commonBtn radiushalf objectBtn" style="width: 43%;">点击重试</a>\
 				  </div></div>'  
 		  }else if(type==1){//加载页面
 			     htmlCode='<div class="noCoupon vertical norunning box_S"><div class="vertical divInner">\
 						 <div class="runningC">\
-							 <img src="images/zrun.png" class="shape" style="width: 100%">\
-							 <img src="images/zcloud1.png" class="cloud1">\
-							 <img src="images/zcloud2.png" class="cloud2">\
-							 <img src="images/zcloud2.png" class="cloud3">\
+							 <img src="/static/images/zrun.png" class="shape" style="width: 100%">\
+							 <img src="/static/images/zcloud1.png" class="cloud1">\
+							 <img src="/static/images/zcloud2.png" class="cloud2">\
+							 <img src="/static/images/zcloud2.png" class="cloud3">\
 							 <p>玩命加载中～</p>\
 						 </div>\
 				  </div></div>'
 		  }else if(type==2){//登录可见
 			     htmlCode='<div class="noCoupon vertical box_S paddingCl"><div class="divInner">\
-					  <img src="images/logsee.png">\
+					  <img src="/static/images/logsee.png">\
 					  <p><a href="">登录</a>可见</p>\
 				     </div>\
 				  </div>'
@@ -271,7 +257,7 @@ function allOad(obj,type){
 		  }else if(type==3){//暂无还款记录
 			  
 			     htmlCode='<div class="noCoupon vertical box_S paddingCl"><div class="divInner">\
-						  <img src="images/noplan.png" class="noRecordImg">\
+						  <img src="/static/images/noplan.png" class="noRecordImg">\
 						  <p>暂无还款记录</p>\
 				  </div></div>'
 			  }
@@ -283,7 +269,7 @@ function allOad(obj,type){
 function noMessage(obj,mess){
 	var htmlCode='';
 	htmlCode='<div class="noMess vertical box_S paddingCl"><div class="divInner">\
-						  <img src="images/noplan.png" class="noRecordImg">\
+						  <img src="/static/images/noplan.png" class="noRecordImg">\
 						  <p>'+mess+'</p>\
 				  </div></div>';
 	obj.append($(htmlCode))

@@ -28,37 +28,7 @@
 	      )
 	    },
         methods:{
-          ...Query,
-          logins: function(event){
-            //alert(this.username+":"+this.password)
-            if(!this.validates()){
-               return
-            }
-            var that=this;
-            this.$http.post('/web/login', {
-			    googleKey:this.googleKey,
-			    userName:this.username
-			  })
-			  .then(function (response) {
-			    if(response.data.code==='200'){
-                   that.success(response.data.msg)
-                   store.commit("LOGIN",{
-                      token:response.data.token,
-                      admin_id:response.data.data.admin_id
-                   })
-                   console.log(that.$route)
-                    //that.$router.push('/index')
-                    that.$router.push({ path: '/index' })
-			    }else{
-			       that.fail(response.data.msg);
-			    }
-			    console.log(response);
-			    
-			  })
-			  .catch(function (error) {
-			    that.message(error);
-			  });
-          }
+          
         }
 	}
 </script>

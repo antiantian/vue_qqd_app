@@ -1,5 +1,5 @@
 /**
- * Created by minh on 2016/1/5.
+ * Created by zcy on 2017/1/5.
  */
 /*下拉刷新*/
 var nextPage = 0,isAjax= 0,myScroll,
@@ -64,12 +64,14 @@ function loaded() {
             }
         }
     });
+
 }
 //初始化绑定iScroll控件
-document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-document.addEventListener('DOMContentLoaded', loaded, false);
+// document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+// document.addEventListener('DOMContentLoaded', loaded, false);
 
 function loadData(page){
+
     if(isAjax) {
         return;
     }
@@ -90,11 +92,12 @@ function loadData(page){
 
     isAjax=1;
     $.ajax({
-        url:'json/ajaxlist-page' + page + '.json',
+        url:'/static/json/ajaxlist-page' + page + '.json',
         data: data,
         method: 'post',
         dataType:'json',
         success: function(datalist){
+            alert(page)
             nextPage=0;
             isAjax=0;
             var data = datalist.list;
@@ -150,7 +153,3 @@ function loadData(page){
         }
     });
 }
-
-$(function(){
-    loadData(1);
-});

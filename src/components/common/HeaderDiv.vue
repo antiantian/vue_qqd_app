@@ -17,7 +17,7 @@ export default {
 	    },
 		mounted () {
 			 this.clicktoggle();
-			 console.log(this.rightCon)
+			// console.log(this.rightCon)
 			 this.phone();
 		},
 	    methods: {
@@ -26,7 +26,7 @@ export default {
 	         //console.log(this.$root)
 	       },
 	       fetchDate:function(){
-	         console.log('change')
+	         //console.log('change')
 	         //console.log(this.$route)
 	       },
 	       phone:function(){

@@ -16,6 +16,7 @@ const store = new Vuex.Store({
     admin_id:null,
     title:'钱趣多',
     DepositoryAccount:true,//存管账户开通
+    InvestMess:null,
   },
   mutations: {
     increment (state) {
@@ -48,6 +49,9 @@ const store = new Vuex.Store({
             state.user.type = ''
             state.user.uid = ''
             delCookie('SESSIONID')*/
+    },
+    InvestMess(state, data){
+      state.InvestMess=data
     },
     TITLE(state, data){
       state.title=data

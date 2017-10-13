@@ -1,6 +1,9 @@
 <template>
 <!-- :href是新页面 跳转连接  link是页面内切换 -->
 <nav class="nav">
+   <test myComponent="234"></test>
+   <simple-counter></simple-counter>
+   <simple-counter></simple-counter>
 	<div :class="currentPath == '/index' ? 'homePage cur': 'homePage'">
 	    <router-link to="/">
 	        <i class="iconfont">&#xe604;</i>
@@ -27,17 +30,40 @@
 </nav>
 </template>
 <script>
+import Vue from 'vue'
+Vue.component('simple-counter', {
+  template: '<button v-on:click="counter += 1">{{ counter }}</button>',
+  // 技术上 data 的确是一个函数了，因此 Vue 不会警告，
+  // 但是我们返回给每个组件的实例却引用了同一个 data 对象
+  data: function () {
+	  return {
+	    counter: 0
+	  }
+	}
+})
+
 	 export default{
-	        data: function() {
+	        name:'footer2',
+	        components:{
+		      test:{
+		        props:["myComponent"],
+		        template:'<p>{{myComponent}}</p>'
+		       } 
+		    },
+	        data() {
 		        return {
 		            msg: 'Hello, vue router!',
-		            currentPath: ''
+		             currentPath: '',
+				      firstName: 'Walter',
+				      lastName: 'White',
+				      alias: 'Heisenberg'
+
 		        }
 		    },
 		    methods: {
 		       fetchDate:function(){
 		         let path=this.$route.path;
-		          console.log(111+":"+path)
+		        //  console.log(111+":"+path)
 		         this.currentPath=path
 		       },
 		    },
@@ -52,7 +78,7 @@
 		    },
 		    route: {
 		        data: function(transition){
-		            console.log(111)
+		          //  console.log(111)
 		            transition.next({
 		                currentPath: transition.to.path
 		            })

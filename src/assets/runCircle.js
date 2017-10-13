@@ -114,8 +114,8 @@
 		var rotataRadians=preA*rotateAngle;
 		canvasC.width = canvasW;
 		canvasC.height = canvasH;
-        console.log(R1)
-        console.log(-R1)
+        //console.log(R1)
+       // console.log(-R1)
 		var x=canvasC.width/2;
 		var y=canvasC.height/2;
 		var startAa=-Math.PI/2;

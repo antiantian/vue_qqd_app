@@ -9,6 +9,7 @@ import store from './store'
 import "babel-polyfill"
 import API from './api/API'
 const api = new API()
+
 Vue.prototype.api = api;
 
 

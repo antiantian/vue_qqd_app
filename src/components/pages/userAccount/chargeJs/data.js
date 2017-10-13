@@ -2442,3 +2442,6 @@
             ]
         },
     ]
+
+
+   export default data; 

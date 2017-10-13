@@ -118,6 +118,14 @@ const routes = [
     component: resolve=> require(['../components/pages/zNewGuide'], resolve)
   },
   {
+    path:'/openDepository',//开通存管账户
+    component: resolve=> require(['../components/pages/userAccount/openDepository'], resolve)
+  },
+  {
+    path:'/shyh/openAccount',//开通存管账户
+    component: resolve=> require(['../components/pages/userAccount/openAccount'], resolve)
+  },
+  {
         path: '/',
         component: resolve => require(['../components/common/Main.vue'], resolve),
         children:[
@@ -146,8 +154,37 @@ const routes = [
         ]
   },
   {
+    path: '/investDetail',
+    component: resolve => require(['../components/pages/product/investDetail.vue'], resolve)
+  },
+  {
     path: '/userAccount/queryCz',
     component: resolve => require(['../components/pages/userAccount/queryCz.vue'], resolve)
+  },
+  {
+    path: '/userAccount/queryTx',
+    component: resolve => require(['../components/pages/userAccount/withdrawals.vue'], resolve)
+  },
+  {
+    path: '/investImmediately',  //立即投资
+    component: resolve => require(['../components/pages/product/investImmediately.vue'], resolve)
+  },
+  {
+    path:'/projectDetailsCommon', //项目详情
+    name:'projectDetails',
+    component: resolve => require(['../components/pages/product/projectDetailsCommon.vue'], resolve)
+  },
+  {
+    path:'/investmentRecordCommon', //投资记录
+    component: resolve => require(['../components/pages/product/investmentRecordCommon.vue'], resolve)
+  },
+  {
+    path:'/repaymentPlanCommon', //还款计划
+    component: resolve => require(['../components/pages/product/repaymentPlanCommon.vue'], resolve)
+  },
+  {
+    path:'/creditProtocol',
+    component: resolve => require(['../components/pages/Protocol/creditProtocol.vue'], resolve)
   }
 ]
 

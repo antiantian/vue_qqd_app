@@ -1,12 +1,7 @@
 // JavaScript Document
 // create by zcy 2016/10/12
 //三次方贝塞尔曲线  
-window.onload = function(){
-	var c = 'lines';  
-	var percent= $("#"+c).attr('tip');
-	//绘制起点、控制点、终点
-	cmove(c,percent)  //canvas id名称 以及总百分比
-};
+
 function cmove(id,perNum){
 	   var c = document.getElementById(id);
 		var percent= perNum;

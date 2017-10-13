@@ -1,15 +1,15 @@
 <template>
     <div>
        <transition name="move" mode="out-in"><router-view></router-view></transition>
-       <v-footer></v-footer>
+       <footer2></footer2>
     </div>
 </template>
 <script>
 import vHead from './head.vue';
-import vFooter from './footer.vue';
+import footer2 from './footer.vue';
 export default {
     components:{
-        vHead,vFooter
+        vHead,footer2
     }
 }
 </script>

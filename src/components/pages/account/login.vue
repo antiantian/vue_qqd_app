@@ -40,7 +40,9 @@
 	    },
 	    data(){
 	      return(
-	        {
+	        { 
+	         fromPath:null, 
+	         queryMess:null,
 	         username:null,
              password:null, 
              googleKey:null,
@@ -65,8 +67,19 @@
 	        }
 	      )
 	    },
+	    mounted(){
+	    // 组件创建完后获取数据，
+		     // 此时 data 已经被 observed 了
+		     this.fetchDate();
+	       console.log(this.$route)
+	    },
         methods:{
           ...Query,
+          fetchDate:function(){
+		         let path=this.$route.path;
+		         console.log(this.$route)
+		         this.currentPath=path
+		       },
           logins: function(event){
             //alert(this.username+":"+this.password)
             if(!this.validates()){
@@ -77,7 +90,7 @@
                 api: apis.login,
                 param: {
                 	customerAccount:this.username,
-				    customerPassword:this.password,
+				    customerPassword:this.password,  
 				    clientId:this.googleKey
                 }
             };
@@ -91,7 +104,11 @@
                    })
                    console.log(that.$route)
                     //that.$router.push('/index')
-                    that.$router.push({ path: '/index' })
+                    if(that.fromPath==='/investDetail'){
+                       that.$router.push({ path: '/investDetail',query:that.queryMess})
+                    }else{
+                       that.$router.push({ path: '/index' })
+                    }
 			    }else{
 			       that.fail(response.data.msg);
 			    }
@@ -102,7 +119,16 @@
 			    that.message(error);
 			  });
           }
-        }
+        },
+        beforeRouteEnter (to, from, next) {
+             console.log(this)
+			 
+			 next(vm => {
+			    // 通过 `vm` 访问组件实例
+			     vm.fromPath=from.path;
+			     vm.queryMess=from.query;
+			  });
+		}
 	}
 </script>
 <style scoped>
