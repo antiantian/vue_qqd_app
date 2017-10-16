@@ -185,6 +185,30 @@ const routes = [
   {
     path:'/creditProtocol',
     component: resolve => require(['../components/pages/Protocol/creditProtocol.vue'], resolve)
+  },
+  {
+    path:'/zLuckdraw',//抽奖
+    component: resolve => require(['../components/pages/menberCenter/zward'], resolve)
+  },
+  {
+    path:'/cashAPrize',//兑换码
+    component:resolve => require(['../components/pages/menberCenter/cashAPrize'], resolve)
+  },
+  {
+    path:'/upgradepacks',//升级礼包
+    component:resolve => require(['../components/pages/menberCenter/upgradpacks'], resolve)
+  },
+  {
+    path:'/zIntegralrule',//积分规则
+    component:resolve => require(['../components/pages/menberCenter/zIntegralrule'], resolve)
+  },
+  {
+    path:'/integralTask',//积分任务
+    component:resolve => require(['../components/pages/menberCenter/integralTask'], resolve)
+  },
+  {
+    path:'/integralDetail',//积分明细
+    component:resolve => require(['../components/pages/menberCenter/integralDetail'], resolve)
   }
 ]
 

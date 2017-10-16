@@ -5,10 +5,10 @@
 var nextPage = 0,isAjax= 0,myScroll,
     pullUpEl, pullUpOffset;
 function loaded() {
-    pullUpEl = document.getElementById('pullUp');
-    pullUpOffset = pullUpEl.offsetHeight;
-    pullDownEl = document.getElementById('pullDown');
-    pullDownOffset = pullDownEl.offsetHeight;
+    let pullUpEl = document.getElementById('pullUp');
+   let pullUpOffset = pullUpEl.offsetHeight;
+   let pullDownEl = document.getElementById('pullDown');
+   let pullDownOffset = pullDownEl.offsetHeight;
     myScroll = new iScroll('wrapper', {
         scrollbarClass: 'myScrollbar',
         useTransition: false,
@@ -70,7 +70,7 @@ function loaded() {
 // document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 // document.addEventListener('DOMContentLoaded', loaded, false);
 
-function loadData(page){
+function loadData(page,myScroll){
 
     if(isAjax) {
         return;
@@ -91,19 +91,19 @@ function loadData(page){
     }
 
     isAjax=1;
+    console.log(111)
     $.ajax({
         url:'/static/json/ajaxlist-page' + page + '.json',
         data: data,
-        method: 'post',
+        method: 'get',
         dataType:'json',
         success: function(datalist){
-            alert(page)
             nextPage=0;
             isAjax=0;
             var data = datalist.list;
             var str = '';
             if(data.length > 0){
-                for(k in data) {
+                for(let k in data) {
                     str += '<li>' +
                     '<a href="Mobile-Watch-live-detail.html" class="M-in-img"><img src="http://img.mukewang.com/' + data[k].pic + '-300-170.jpg" /></a>' +
                     '<div class="M-in-info"><h1><a href="#">'+ data[k].name +'</a></h1><span>张大春</span>' +
@@ -153,4 +153,4 @@ function loadData(page){
         }
     });
 }
-export {loaded,loadData}
+export {loaded,loadData,myScroll}

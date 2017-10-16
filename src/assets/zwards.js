@@ -353,4 +353,29 @@ $.fn.extend({
 		    $(".wbox").css({"height":wsh+"px","padding-top":wsp+"px"})
 			$(".lotteryDialogs,.bgfix").show();
 	   }
-	   
+	$.fn.extend({  
+        drawArd:function(datas,times){
+            datas=parseInt(datas);  
+            var type=newArr[datas].type;
+            var txts=newArr[datas].title;
+            if(type=='no'){
+                $(".lotteryDinner").html("<div class='wbox wardFail box_S'><p>重要的是开心喽</p></div>")
+            }else{
+               $(".lotteryDinner").html("<div class='wbox wardSucess box_S'><p>获得"+txts+"</p></div>") 
+            }
+            if(times==1){
+                $(".lotteryBtn").text("再抽一次");
+            }else{
+               $(".lotteryBtn").text("再抽一次");
+            }
+            var wparent=parseInt($(".innerTweBottom").width());
+            if(wparent>430){
+                wparent=430;
+            }
+            var wsw=parseInt(0.8*wparent);
+            var wsh=wsw*297/434;
+            var wsp=wsh*0.6;
+            $(".wbox").css({"height":wsh+"px","padding-top":wsp+"px"})
+            $(".lotteryDialogs,.bgfix").show();
+       }
+    })

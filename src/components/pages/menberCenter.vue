@@ -24,30 +24,30 @@
 						</div>
 					</div>
 					<div class="zwardM W50 clearfix">
-						<a onclick="zLuckdraw();" class="commonBtn radiushalf zwardMember">立即抽奖</a>
+						<a @click="zLuckdraw" class="commonBtn radiushalf zwardMember">立即抽奖</a>
 						<a href="/cashAPrize" class="commonBtn radiushalf zwardMember">兑换码兑换</a>
 					</div>
 					<ul class="zMemberMid clearfix">
 						<li class="col3">
-				         <a onclick="toUpgradepacks();">
+				         <a @click="toUpgradepacks"> 
 				           <img class="imgIcon" src="/static/images/zM_06.png" />
 				           <span>升级礼包</span>
 				         </a>
 				       </li>
 				       <li class="col3">
-				         <a onclick="integralTask();">
+				         <a @click="integralTask">
 				           <i class="iconfont blue">&#xe66b;</i>
 				           <span>积分任务</span>
 				         </a>
 				       </li>
 				       <li class="col3">
-				         <a onclick="toIntegralDetail();">
+				         <a @click="toIntegralDetail">
 				           <i class="iconfont yellow">&#xe62e;</i>
 				           <span>积分明细</span>
 				         </a>
 				       </li>
 				       <li class="col3">
-				         <a onclick="zIntegralrule();">
+				         <a @click="zIntegralrule"> 
 				           <i class="iconfont blue">&#xe65e;</i>
 				           <span>积分规则</span>
 				         </a>
@@ -205,7 +205,7 @@
 <script>
     import store from '../../store'
     import headerDiv from '../common/HeaderDiv'
-    import {loaded,loadData} from  '../../assets/pulllist'
+     import {loaded,loadData,myScroll} from  '../../assets/pulllist'
 	export default {
 	    components:{
 	      headerDiv 
@@ -226,6 +226,7 @@
 	   methods:{
          init:function(){
            this.$nextTick(function(){
+           
                //弹出层最大高度限制
 				  $(function(){
 					  var sh=$(".zMemberIog3").find(".conmess").height();
@@ -243,19 +244,40 @@
 					       $("#ruleJXJ").addClass("allCon");
 						})
                })
-               $(function() {
+           
 					//$("#sjld").getArea("#shenfen", "#chengshi", "#quyu");
-					  //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-                      document.addEventListener('DOMContentLoaded', loaded, false);
-
-				});
-
-				$(function(){
-				    loadData(1);
-				});
-				//初始化绑定iScroll控件
-
+					 //初始化绑定iScroll控件
+                        loaded();
+						// document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+						 document.addEventListener('DOMContentLoaded', loaded, false);
+                        loadData(1,myScroll)
            })
+         },
+         zLuckdraw:function(){
+           this.goDel('/zLuckdraw')
+         },
+         toUpgradepacks:function(){
+           this.goDel('/upgradepacks')
+         },
+         zIntegralrule:function(){
+           this.goDel('/zIntegralrule')
+         },
+         integralTask:function(){
+           this.goDel('/integralTask')
+         },
+         toIntegralDetail:function(){
+           this.goDel('/integralDetail')
+         },
+         goDel:function(path){
+            if(this.store_admin){
+                this.$router.push({
+	             path:path,
+	           })
+            }else{
+               this.$router.push({
+	             path:'/login'
+	           })
+            }
          }
        } 
 	}

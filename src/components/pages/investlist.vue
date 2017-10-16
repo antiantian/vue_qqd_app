@@ -96,7 +96,7 @@
 	        this.investlist();
 
 	      },
-	      investlist: function(){
+	      investlist: function(getall){
             var that=this;
             let params = {
                 api: apis.investlist,
@@ -104,7 +104,8 @@
                 	order_value:this.order_value,
 				    order_by:this.order_by,
 				    pageNum:this.pageNum, 
-				    numPerPage:this.numPerPage
+				    numPerPage:this.numPerPage,
+				    getall:getall?true:false,// 不追加 是重新获取当前页码的值
                 }
             };
             this.api.post(params)
@@ -113,12 +114,21 @@
 			    if(response.data.code==='200'){
 
                    that.success(response.data.msg)
-                   that.datalist=that.datalist.concat( response.data.data)
-                   if(response.data.data.length<that.numPerPage){
-                     that.more=false;
+                   that.datalist=getall?response.data.data:that.datalist.concat( response.data.data); //追加或者替换
+                   if(getall){
+                       if(response.data.data.length<that.numPerPage*that.pageNum){
+	                     that.more=false;
+	                   }else{
+	                     that.more=true;
+	                   }
                    }else{
-                     that.more=true;
+                       if(response.data.data.length<that.numPerPage){
+	                     that.more=false;
+	                   }else{
+	                     that.more=true;
+	                   }
                    }
+                   
                    that.waves();
 			    }else if(response.data.code==='201'){
 			       that.fail(response.data.msg);
@@ -167,6 +177,8 @@
                }
             }
             console.log(this.order_value+":"+this.order_by)
+            //重新请求数据
+            this.investlist(true)
 	      },
           waves:function(){
               this.$nextTick(function(){  
