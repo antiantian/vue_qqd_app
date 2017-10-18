@@ -260,7 +260,15 @@ function allOad(obj,type){
 						  <img src="/static/images/noplan.png" class="noRecordImg">\
 						  <p>暂无还款记录</p>\
 				  </div></div>'
-			  }
+		  }else if(type==4){ //暂无兑换记录
+		  	   htmlCode='<div class="noCoupon vertical box_S paddingCl" style="pointer-events:auto"}>\
+		  	   <div class="divInner">\
+		  	   <img src="/static/images/noplan.png" class="noRecordImg">\
+		  	   <p>暂无兑换记录</p>\
+		  	   <a href="/menberCenter" style="margin-top:2em;" class="commonBtn radiushalf">立即兑换</a>\
+		  	   </div>\
+		  	   </div>'
+		  }
 		   obj.append($(htmlCode))
 	    }
 

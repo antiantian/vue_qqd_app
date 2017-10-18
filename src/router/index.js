@@ -209,6 +209,14 @@ const routes = [
   {
     path:'/integralDetail',//积分明细
     component:resolve => require(['../components/pages/menberCenter/integralDetail'], resolve)
+  },
+  {
+    path:'/zMygifts',//我的奖品
+    component:resolve => require(['../components/pages/menberCenter/zMygifts'], resolve)
+  },
+  {
+    path:'/zMyexchange',//我的兑换
+    component:resolve => require(['../components/pages/menberCenter/zMyexchange'], resolve)
   }
 ]
 

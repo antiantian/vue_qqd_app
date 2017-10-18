@@ -1,8 +1,11 @@
 /**
- * Created by zcy on 2017/1/5.
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2017-10-18 14:26:09
+ * @version $Id$
  */
 /*下拉刷新*/
-
+import apis from  '../../../../api'
 function loaded() {
     let pullUpEl = this.$refs.pullUp;
     let pullUpOffset = pullUpEl.offsetHeight;
@@ -19,52 +22,52 @@ function loaded() {
                 pullUpEl.className = '';
                 pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
             }else if(pullDownEl.className.match('loading')) {
-              pullDownEl.className = '';
-              pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-             } 
+		      pullDownEl.className = '';
+		      pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+		     } 
         },
         onScrollMove: function () {
            if (this.y > 5 && !pullDownEl.className.match('flip')) {
-              pullDownEl.className = 'flip';
-              pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...';
-              this.minScrollY = 0;
-             } else if (this.y < 5 && pullDownEl.className.match('flip')) {
-              pullDownEl.className = '';
-              pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-              this.minScrollY = -pullDownOffset;
-             } else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
-              pullUpEl.className = 'flip';
-              pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...';
-              this.maxScrollY = this.maxScrollY;
-             } else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
-              pullUpEl.className = '';
-              pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-              this.maxScrollY = pullUpOffset;
-             }
+		      pullDownEl.className = 'flip';
+		      pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...';
+		      this.minScrollY = 0;
+		     } else if (this.y < 5 && pullDownEl.className.match('flip')) {
+		      pullDownEl.className = '';
+		      pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+		      this.minScrollY = -pullDownOffset;
+		     } else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
+		      pullUpEl.className = 'flip';
+		      pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...';
+		      this.maxScrollY = this.maxScrollY;
+		     } else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
+		      pullUpEl.className = '';
+		      pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+		      this.maxScrollY = pullUpOffset;
+		     }
         },
         onScrollEnd: function () {
             let nextPage=self.nextPage;
-            
+            let more=self.more;
             if (pullUpEl.className.match('flip')) {
-                if(nextPage>0){
+                if(more){
                     pullUpEl.className = 'loading';
                     pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';
-                    self.loadData(nextPage);
+                    self.loadData();
                 }else{
                     pullUpEl.className = 'none';
                     pullUpEl.querySelector('.pullUpLabel').innerHTML = '已无可加载的数据';
                 }
                 
             }else if(pullDownEl.className.match('flip')){
-                if(nextPage>0){
+            	if(more){
                     pullDownEl.className = 'loading';
                     pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';
-                    self.loadData(nextPage);
+                    self.loadData();
                 }else{
                     pullDownEl.className = 'none';
                     pullDownEl.querySelector('.pullDownLabel').innerHTML = '已无可加载的数据';
                 }
-                
+            	
             }
         }
     });
@@ -73,13 +76,77 @@ function loaded() {
 //初始化绑定iScroll控件
 // document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 // document.addEventListener('DOMContentLoaded', loaded, false);
+function loadData(getall){  
 
-function loadData(){
-    let page=this.nextPage;
-    let isAjax=this.isAjax;
-    let self=this;
+            var that=this;
+            let params = {
+                api: apis.gift,
+                param: {
+				    pageNum:this.pageNum, 
+				    numPerPage:this.numPerPage,
+				    getall:getall?true:false,// 不追加 是重新获取当前页码的值
+                }
+            };
+            this.api.post(params)
+			  .then(function (response) {
+			    if(response.data.code==='200'){
+                   that.success(response.data.msg)
+                   that.datalist=getall?response.data.data:that.datalist.concat( response.data.data); //追加或者替换
+                   if(getall){
+                       if(response.data.data.length<that.numPerPage*that.pageNum){
+	                     that.more=false;
+	                     
+	                   }else{
+	                     that.more=true;
+	                   }
+                   }else{
+                       if(response.data.data.length<that.numPerPage){
+	                     that.more=false; 
+	                   }else{
+	                     that.more=true;
+	                   }
+                   }
+                   that.pageNum+=1;
+                   that.$nextTick(function(){
+                       that.myScroll.refresh();
+                   })
+                   if(!that.more){
+                       $('.pullUpLabel').text('已无可加载的数据');
+                   }
+                   //that.waves();
+                   $(".noMess").remove();
+			    }else if(response.data.code==='201'){
+
+			       that.datalist=getall?response.data.data:that.datalist.concat( response.data.data); //追加或者替换
+			       that.fail(response.data.msg);
+			       that.more=false;
+                   $('.pullUpLabel')[0].innerHTML = '已无可加载的数据';
+			       if(getall){		           	
+				      // allOad($(".fixTop"),3);
+				       noMessage($("#wrapper"),"暂无积分记录");
+	                  // $(".noMess").css({"paddingTop":"7.6em"})
+			       }
+			       that.$nextTick(function(){
+                       that.myScroll.refresh();
+                   })
+			        if(!that.more){
+                       $('.pullUpLabel').text('已无可加载的数据');
+                   }
+			    }else{
+			       that.fail(response.data.msg);
+			    }
+			   // console.log(response);
+			    
+			  })
+			  .catch(function (error) {
+			    that.message(error);
+			  });
+          }
+function loadData2(){
+    var page=this.nextPage;
+    var isAjax=this.isAjax;
+    var self=this;
     let nextPage=this.nextPage;
-    
     if(isAjax) {
         return;
     }
@@ -99,8 +166,7 @@ function loadData(){
     }
 
     isAjax=1;
-     console.log(222222222+";"+page)
-     
+    
     $.ajax({
         url:'/static/json/ajaxlist-page' + page + '.json',
         data: data,
@@ -109,25 +175,15 @@ function loadData(){
         success: function(datalist){
             nextPage=0;
             isAjax=0;
-             console.log(datalist.list)
             var data = datalist.list;
             var str = '';
-            let exchangeFn=self.exchangePrizes;
-            exchangeFn()
             if(data.length > 0){
                 for(let k in data) {
-                    str += '<li>'+
-                               '<div class="box">'+
-                                    '<div class="img boxshadow">'+
-                                         '<img src="'+data[k].pic+'" />'+
-                                         '<p class="vertical"><span></span><i></i></p>'+
-                                    '</div>'+
-                                    '<div class="mess">'+
-                                        '<p class="info"><i class="iconfont orange"></i><span class="orange">'+data[k].score+'</span> <em>积分</em></p>'+
-                                    '</div>'+
-                                    '<a onclick="exchangeFn('+data[k].id+','+data[k].score+')" class="radiushalf immiteC">立即兑换</a>'+
-                               '</div>'+
-                            '</li>';
+                    str += '<li>' +
+                    '<a href="Mobile-Watch-live-detail.html" class="M-in-img"><img src="http://img.mukewang.com/' + data[k].pic + '-300-170.jpg" /></a>' +
+                    '<div class="M-in-info"><h1><a href="#">'+ data[k].name +'</a></h1><span>张大春</span>' +
+                    '<i>'+ data[k].update_time_str +'</i><a class="M-in-link">访谈</a></div>' +
+                    '<div class="clearfix"></div><p>'+ data[k].short_description +'</p></li>';
                 }
             }else{
                 str = page == 1 ? '<div class="nodata"></div>' : '';
@@ -178,7 +234,7 @@ function loadData(){
 
             }
             self.nextPage=nextPage
-       
+            console.log(nextPage)
         },
         error:function(){
             isAjax=0;
@@ -191,5 +247,4 @@ function loadData(){
         }
     });
 }
-
 export {loaded,loadData}

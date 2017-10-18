@@ -1,4 +1,11 @@
 /**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2017-10-18 16:49:45
+ * @version $Id$
+ */
+
+/**
  * Created by zcy on 2016/11/3 0003.
  */
 
@@ -245,7 +252,7 @@ $.fn.extend({
                 var indexs=newA[ix-1];
 				//结果
 				setTimeout(function(){
-					drawArd(indexs,allTime);
+					drawArd(arr,indexs,allTime);
 				    initB();  	
 			    },500)
 				
@@ -309,7 +316,7 @@ $.fn.extend({
             $(".lotteryDialogs,.bgfix").show();
        }
     })
-function drawArd(datas,times){
+function drawArd(newArr,datas,times){
             datas=parseInt(datas);  
             var type=newArr[datas].type;
             var txts=newArr[datas].title;
@@ -333,28 +340,5 @@ function drawArd(datas,times){
             $(".wbox").css({"height":wsh+"px","padding-top":wsp+"px"})
             $(".lotteryDialogs,.bgfix").show();
        }
-  //弹出层 参数
- // 关闭按钮 
-    
-       $(function(){
-              $("body").find(".lotteryBtn").click(function(){
-                  $(this).parents(".lotteryDialogs").hide();
-                  $(".bgfix").hide();
-                  //恢复未选中状态
-                  $(".zwardList").find("li").removeClass("cur");
-                  if($("body").find("#timesWard").text()<=0){
-                     $.DialogByZ.Alert({Title: "提示", Content: "您当前积分不足，快去赚取积分吧！",BtnL:"知道了"}); 
-                  }else{
-                     $.DialogByZ.Alert({Title: "提示", Content: "再抽一次将消耗您20积分",BtnL:"知道了"});
-                  }
-                  
-                  return false;
-              })
 
-             $("body").on("click",".lotteryClose", function() {
-                  $(this).parents(".lotteryDialogs").hide();
-                  $(".bgfix").hide();
-             });
-        })
-            
-    //zwardList
+export {drawArd}

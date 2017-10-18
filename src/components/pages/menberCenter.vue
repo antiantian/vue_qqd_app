@@ -3,9 +3,9 @@
     <header-div message="会员中心"></header-div>
      <div class="mapContent">
 		<div class="map_container" id="mapContainer"></div>
-		<div id="wrapper">
+		<div id="wrapper" ref="wrapper">
 			<div id="scroller">
-				<div id="pullDown">
+				<div id="pullDown" ref="pullDown">
 					<span class="pullDownIcon" style="display: none;"></span><span class="pullDownLabel">下拉刷新</span>
 				</div>
 				<div class="middleContent fixTop  fixBottom">
@@ -53,13 +53,13 @@
 				         </a>
 				       </li>
 				       <li class="col3">
-				         <a onclick="zMygifts();">
+				         <a @click="zMygifts">
 				           <i class="iconfont orangered">&#xe62b;</i>
 				           <span>我的奖品</span>
 				         </a>
 				       </li>
 				       <li class="col3">
-				         <a onclick="zMyexchange();">
+				         <a @click="zMyexchange">
 				           <img class="imgIcon" src="/static/images/zM_07.png" />
 				           <span>我的兑换</span>
 				         </a>
@@ -73,12 +73,12 @@
 						</div> -->
 						<img class="imgSM" src="/static/images/zMember3.png" />
 						<div class="inner">
-							<div class="inner">
-							<ul class="zMlist clearfix" id="like-list"><li><div class="box"><div class="img boxshadow jxj"><img src="https://admin.qianquduo.com/files/image/20170321/1490059550113049765.png"><p class="vertical"><span></span><i></i></p></div><div class="mess"><p class="info"><i class="iconfont orange"></i><span class="orange">300</span> <em>积分</em></p></div><a onclick="exchangePrizes(1,300);" class="radiushalf immiteC">立即兑换</a></div></li><li><div class="box"><div class="img boxshadow ddj"><img src="https://admin.qianquduo.com/files/image/20170322/1490152723313080347.png"><p class="vertical"><span></span><i></i></p></div><div class="mess"><p class="info"><i class="iconfont orange"></i><span class="orange">100</span> <em>积分</em></p></div><a onclick="exchangePrizes(2,100);" class="radiushalf immiteC">立即兑换</a></div></li><li><div class="box"><div class="img boxshadow ddj"><img src="https://admin.qianquduo.com/files/image/20170322/1490150456185022521.png"><p class="vertical"><span></span><i></i></p></div><div class="mess"><p class="info"><i class="iconfont orange"></i><span class="orange">160</span> <em>积分</em></p></div><a onclick="exchangePrizes(3,160);" class="radiushalf immiteC">立即兑换</a></div></li><li><div class="box"><div class="img boxshadow ddj"><img src="https://admin.qianquduo.com/files/image/20170322/1490152686671008888.png"><p class="vertical"><span></span><i></i></p></div><div class="mess"><p class="info"><i class="iconfont orange"></i><span class="orange">200</span> <em>积分</em></p></div><a onclick="exchangePrizes(4,200);" class="radiushalf immiteC">立即兑换</a></div></li><li><div class="box"><div class="img boxshadow ddj"><img src="https://admin.qianquduo.com/files/image/20170322/1490152676471081126.png"><p class="vertical"><span></span><i></i></p></div><div class="mess"><p class="info"><i class="iconfont orange"></i><span class="orange">400</span> <em>积分</em></p></div><a onclick="exchangePrizes(5,400);" class="radiushalf immiteC">立即兑换</a></div></li><li><div class="box"><div class="img boxshadow"><img src="https://admin.qianquduo.com/files/image/20170725/1500963194503039556.png"><p class="vertical"><span></span><i></i></p></div><div class="mess"><p class="info"><i class="iconfont orange"></i><span class="orange">2088</span> <em>积分</em></p></div><a onclick="exchangePrizes(15,2088);" class="radiushalf immiteC">立即兑换</a></div></li></ul>
-							<div id="pullUp">
+							<ul class="zMlist clearfix" id="like-list" ref="ullist">
+
+							</ul>
+							<div id="pullUp" ref="pullUp">
 								<span class="pullUpIcon"></span><span class="pullUpLabel">上拉加载更多...</span>
 							</div>
-						</div>
 						</div>
 					</div>
 				</div>
@@ -205,14 +205,16 @@
 <script>
     import store from '../../store'
     import headerDiv from '../common/HeaderDiv'
-     import {loaded,loadData,myScroll} from  '../../assets/pulllist'
+    import {loaded,loadData,exchangePrizes} from  '../../assets/pulllist'
 	export default {
 	    components:{
 	      headerDiv 
 	    },
 	    data(){
 	    	return{
-	    	  degree:'Q1'
+	    	  degree:'Q1',
+	    	  isAjax:null,
+	    	  nextPage:1,
 	    	}
 	    },
 	   computed: {
@@ -220,15 +222,24 @@
 		       return store.state.admin_id
 		    }
        },
+       created(){
+         this.loaded=loaded;
+         this.loadData=loadData;
+       },
        mounted(){
           this.init();
+          this.$nextTick(function(){
+              this.loaded();
+          })
        },
 	   methods:{
          init:function(){
            this.$nextTick(function(){
-           
+              
+              var self=this;
                //弹出层最大高度限制
 				  $(function(){
+				    console.log(333333333333333333)
 					  var sh=$(".zMemberIog3").find(".conmess").height();
 					  var allH=$(window).height();
 					  var alls=allH*0.8;
@@ -243,15 +254,18 @@
 						$(".zMemberbottom").on("click",".jxj",function(){
 					       $("#ruleJXJ").addClass("allCon");
 						})
+						 
                })
-           
+                    // loaded();
 					//$("#sjld").getArea("#shenfen", "#chengshi", "#quyu");
-					 //初始化绑定iScroll控件
-                        loaded();
-						// document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-						 document.addEventListener('DOMContentLoaded', loaded, false);
-                        loadData(1,myScroll)
+					 // 绑定iScroll控件
+					self.loadData(self.exchangePrizes)
+                       
+                        
            })
+         },
+         exchangePrizes:function(id,score){
+            alert(id+":"+score)
          },
          zLuckdraw:function(){
            this.goDel('/zLuckdraw')
@@ -267,6 +281,12 @@
          },
          toIntegralDetail:function(){
            this.goDel('/integralDetail')
+         },
+         zMygifts:function(){
+           this.goDel('/zMygifts')
+         }, 
+         zMyexchange:function(){
+           this.goDel('/zMyexchange')
          },
          goDel:function(path){
             if(this.store_admin){
@@ -362,3 +382,4 @@
 }
 
 </style>
+

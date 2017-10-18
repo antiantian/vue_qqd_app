@@ -13,5 +13,7 @@ export default {
 	register:       baseURL+'/user/register',			//用户注册
 	investlist:     baseURL+'/product/investlist',		//获取产品列表
 	investDetail:   baseURL+'/product/investDetail',	//获取产品详情
+	integralDetail: baseURL+'/memberCenter/integralDetail',  //积分详情
+	gift:           baseURL+'/memberCenter/gift',       //我的奖品
 }
 
