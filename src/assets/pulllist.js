@@ -132,7 +132,6 @@ function loadData(){
             }else{
                 str = page == 1 ? '<div class="nodata"></div>' : '';
             }
-         
             if(page == 1) {  //如果是第一页
                 if($("#like-list").html() == ''){
                    
