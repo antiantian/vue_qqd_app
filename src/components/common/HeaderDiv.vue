@@ -5,6 +5,7 @@
      <p>{{message}}</p>
      <router-link to="/login" v-if="rightCon" class="iconfont navRight nologin">&#xe65a;</router-link>
      <i class="iconfont navRight headPhone nologin" v-if="headPhone">&#xe60c;</i>
+     <i class="navRight navRT today" v-if="rightToday">今天</i>
      <span class="navRight navRT rulesBtn" v-if="rulesBtn">规则</span>
    </header>
 </template>
@@ -56,7 +57,7 @@ export default {
 	     // 如果路由有变化，会再次执行该方法
 	     "$route": "fetchDate"
 	    },
-	    props:['message','path','rightCon','goback','headPhone','rulesBtn']
+	    props:['message','path','rightCon','goback','headPhone','rulesBtn','rightToday']
 }
 </script>
 

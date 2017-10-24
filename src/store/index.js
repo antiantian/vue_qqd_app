@@ -15,8 +15,9 @@ const store = new Vuex.Store({
     token:null,
     admin_id:null,
     title:'钱趣多',
-    DepositoryAccount:true,//存管账户开通
+    DepositoryAccount:Math.floor(Math.random()*2)===1?true:false,//存管账户开通
     InvestMess:null,
+    hobby:null,
   },
   mutations: {
     increment (state) {
@@ -58,6 +59,9 @@ const store = new Vuex.Store({
     },
     DepositoryAccount(state, data){
       state.DepositoryAccount=data
+    },
+    hobby(state, data){
+      state.hobby=data
     }
   },
   actions: {

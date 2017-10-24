@@ -6,7 +6,7 @@
  */
 
 //城市选择构造函数
-
+import data from './data';
  function areaDefined(option){
   //二级联动
 	var str="";

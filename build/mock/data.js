@@ -1,6 +1,10 @@
  const Mock = require('mockjs');
  var moment= require('moment');
  var Random = Mock.Random;
+ var b=new Date();
+ var y=b.getFullYear();
+ var m=b.getMonth()+1;
+ var d=b.getDate();
  function deallist() {
     var str3 = Random.integer(8,50);
     let arr=[];  
@@ -27,6 +31,141 @@
     } 
     return arr;
 } 
+function integral(){
+   var str3 = Random.integer(8,20);
+   let arr=[];  
+   var phones=/^1(3|4|5|7|8)\d{9}$/;
+   var types=['个人投资','邀请好友','个人注册','开通存管','完善信息'];
+    for(let i=0;i<str3;i++){
+        let child=Mock.mock({
+            'key|+1':i,
+            "month":function(){
+               
+               var month=Math.floor(Math.random()*m+1);
+               return month;   
+            },
+            "date":function(){
+                var year=y;
+                var month=this.month;
+
+                var day=day=Math.floor(Math.random()*31+1);
+                if(month==2){
+                  day=Math.floor(Math.random()*28+1);
+                }
+                if(month==4||month==6||month==9||month==11){
+                  day=Math.floor(Math.random()*30+1);
+                }
+                return year+"-"+month+"-"+day;
+            },
+            "username":'安娜',
+            "phone":phones,
+            "types":function(){
+                var sites=Math.floor(Math.random()*(types.length));
+                var type=types[sites];
+                if(type==='完善信息'||type==='开通存管'||type==='完善信息'){
+                    types.splice(sites,1)
+                }
+                return type
+            },
+            "amount":function(){
+               if(this.types!=='投资'){
+                   return 0
+               }else{
+                   Math.floor(Math.random()*100000)
+               }
+            },
+           "sumNum":str3,
+           "scores":function(){
+              if(this.amount!=0){
+                 return Math.floor(Math.random()*200)
+              }else{
+                 return 20;
+              }
+           },
+          });
+        arr.push(child)
+    } 
+    return arr;
+}
+function gift(){
+    var str3 = Random.integer(8,20);
+    let arr=[];  
+    var phones=/^1(3|4|5|7|8)\d{9}$/;
+    for(let i=0;i<str3;i++){
+        let child=Mock.mock({
+            'key|+1':i,
+            "type|1":['ddj','jxj'],
+            "mount":function(){
+                if(this.type==='ddj'){
+                   var par=[5,8,10,20,50]
+                }else{
+                   var par=[0.5,0.8,1]
+                }
+                return par[Math.floor(Math.random()*(par.length))]
+            },
+            "indition|1": [null,"15000","5000","100"],
+            "use|1":[0,1,2],
+            "limitTime":function(){
+                var month=Math.floor(Math.random()*m+1);
+
+                var day=day=Math.floor(Math.random()*31+1);
+                if(month==2){
+                  day=Math.floor(Math.random()*28+1);
+                }
+                if(month==4||month==6||month==9||month==11){
+                  day=Math.floor(Math.random()*30+1);
+                }
+                if(this.use==2){ //已过期  月份可以相同  日期一定小于今天
+                   
+                    month=Math.floor(Math.random()*m+1);
+                    if(month==m){
+                          day=Math.floor(Math.random()*(d-1)+1);
+                    }
+                    
+                }
+                if(this.use==0){ // 可以使用的   大于等于当前月
+                    month=Math.floor(Math.random()*(12-m+1)+m);
+                    if(month==m){ //当前月 日期大于今天
+                         var all=31;
+                         if(month==2){
+                            all=28;
+                         }
+                         if(month==4||month==6||month==9||month==11){
+                            all=30;
+                          }
+                         day=Math.floor(Math.random()*(all-d+1)+d);
+                    }
+              }
+              return {
+                  y:y,
+                  m:month,
+                  d:day
+              }
+            },
+            "dateTime":function(){
+                var year=this.limitTime.y;
+                var month=this.limitTime.m;
+                var day=this.limitTime.d;
+                return year+"."+(month<10?'0'+month:month)+"."+(day<10?'0'+day:day);
+            },
+            "changeTime":function(){
+                var pars=[1,6][Math.floor(Math.random()*2)];
+                var year=this.limitTime.y;
+                var month=this.limitTime.m;
+                var day=this.limitTime.d;
+                var finiM=month-pars;
+                if(finiM<0){
+                     year-=1;
+                     finiM=finiM+12;
+                }
+                return year+"."+(finiM<10?'0'+finiM:finiM)+"."+(day<10?'0'+day:day);
+            },
+            "sumNum":str3,
+          });
+        arr.push(child)
+    } 
+    return arr;
+}
 function investlist(){
     var str3 = Random.integer(8,50);
     let arr=[];  
@@ -526,6 +665,8 @@ const MerchantData=MerchantList();
 const MerchantCapitalData=MerchantCapitallist();
 const investlistData=investlist()
 const paymentConfigData=paymentConfigList();
+const integralData=integral();// 积分
+const giftData=gift();//奖品
 module.exports={
   deallistData,
   settleListData,
@@ -538,5 +679,7 @@ module.exports={
   paymentWayData,
   paymentTypeData,
   paymentConfigData,
-  investlistData
+  investlistData,
+  integralData,
+  giftData
 }

@@ -7,7 +7,7 @@
 			  $(this).addClass("cur").siblings().removeClass("cur")
 		  })
 	  //点击打开详情
-		  $(".commonTab").click(function(){
+		  $("body").on('click',".commonTab",function(){
 
 			  if($(this).hasClass("open")){
 				  $(this).removeClass("open");

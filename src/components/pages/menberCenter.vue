@@ -265,7 +265,7 @@
            })
          },
          exchangePrizes:function(id,score){
-            alert(id+":"+score)
+           // alert(id+":"+score)
          },
          zLuckdraw:function(){
            this.goDel('/zLuckdraw')

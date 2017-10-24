@@ -217,6 +217,78 @@ const routes = [
   {
     path:'/zMyexchange',//我的兑换
     component:resolve => require(['../components/pages/menberCenter/zMyexchange'], resolve)
+  },
+  {
+    path:'/userAccount/investManageBiding',//投资管理 投标中
+    component: resolve => require(['../components/pages/userAccount/investManageBiding'], resolve)
+  },
+  {
+    path:'/userAccount/investManageRepaymenting',//投资管理 还款中
+    component: resolve => require(['../components/pages/userAccount/investManageRepaymenting'], resolve)
+  },
+  {
+    path:'/userAccount/investManageRepaymented',//投资管理 已还款
+    component: resolve => require(['../components/pages/userAccount/investManageRepaymented'], resolve)
+  },
+  {
+    path:'/userAccount/fundRecord', //资金记录
+    component: resolve => require(['../components/pages/userAccount/fundRecord'], resolve)
+  },
+  {
+    path:'/shyh/escrowAccount', //存管帐户
+    component: resolve => require(['../components/pages/shyh/escrowAccount'], resolve)
+  },
+  {
+    path:'/shyh/escrowAccountTwo', //存管帐户 2
+    component: resolve => require(['../components/pages/shyh/escrowAccountTwo'], resolve)
+  },
+  {
+    path:'/shyh/escrowAccountThird', //存管帐户 3
+    component: resolve => require(['../components/pages/shyh/escrowAccountThird'], resolve)
+  },
+  {
+    path:'/userAccount/centerJxj',//加息券
+    component: resolve => require(['../components/pages/userAccount/centerJxj'], resolve)
+  },
+  {
+    path:'/userAccount/centerDdj',//多多金
+    component: resolve => require(['../components/pages/userAccount/centerDdj'], resolve)
+  },
+  {
+    path:'/userAccount/calender',//回款日历
+    component: resolve => require(['../components/pages/userAccount/calender'], resolve)
+  },
+  {
+    path:'/userAccount/zScode',// 我的邀请
+    component: resolve => require(['../components/pages/userAccount/zScode'], resolve)
+  },
+  {
+    path:'/userAccount/accoutSet',//账户设置
+    component: resolve => require(['../components/pages/userAccount/accoutSet'], resolve)
+  },
+  {
+    path:'/userAccount/perfectinfo',//完善信息
+    component: resolve => require(['../components/pages/userAccount/perfectinfo'], resolve)
+  },
+  {
+    path:'/userAccount/unbundlingPhone',//解绑手机号
+    component: resolve => require(['../components/pages/userAccount/unbundlingPhone'], resolve)
+  },
+  {
+    path:'/userAccount/zHobby', //兴趣爱好
+    component: resolve => require(['../components/pages/userAccount/zHobby'], resolve)
+  },
+  {
+    path:'/userAccount/changPwd',//修改密码
+    component: resolve => require(['../components/pages/userAccount/changPwd'], resolve)
+  },
+  {
+    path:'/userAccount/myInvitation', // 我的邀请
+    component: resolve => require(['../components/pages/userAccount/myInvitation'], resolve)
+  },
+  {
+    path:'/userAccount/messCenter', //消息中心
+    component: resolve => require(['../components/pages/userAccount/messCenter'], resolve)
   }
 ]
 

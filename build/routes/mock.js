@@ -13,7 +13,9 @@ const {
   MerchantCapitalData,
   paymentWayData,
   paymentTypeData,
-  paymentConfigData
+  paymentConfigData,
+  integralData,//积分详情
+  giftData,
 } =  require('../mock/data');
 const deallistInfoData=require('../mock/dealinfo');
 const settleInfoData=require('../mock/settleinfo');
@@ -24,6 +26,7 @@ var responseData;
 router.get('/', function (req, res) {
     res.render('index');
 });
+
 router.use(function(req,res,next){
     responseData={
         code:'200',
@@ -34,10 +37,8 @@ router.use(function(req,res,next){
     }
     next();
 })
-// 直接读取json文件导出
- 
 router.post('/index/login', function (req, res) {
-      console.log(req.body)
+      //console.log(req.body)
     var userName=req.body.customerAccount||'';
     var password=req.body.customerPassword||'';
     
@@ -210,6 +211,7 @@ function searchOrder(parent,pageNum,numPerPage,req){
   //["order_value",'order_by']
    let order_value=req.order_value||'';
    let order_by=req.order_by||'';
+   var getall=req.getall;  //追加或者全部获取
    let parentData=parent;
    // console.log(parentData)
     var pageNum=pageNum||''; //2
@@ -245,7 +247,11 @@ function searchOrder(parent,pageNum,numPerPage,req){
           pageNum=Math.ceil((parentData.length)/((pageNum-1)*numPerPage));
        }
         let newArr=[];
-        for(let i=(pageNum-1)*numPerPage;i<numPerPage*pageNum;i++){
+        let startPage=(pageNum-1)*numPerPage;
+        if(getall==='true'){
+            startPage=0;
+        }
+        for(let i=startPage;i<numPerPage*pageNum;i++){
              //console.log(deallistData[i])
              if(parentData[i]){
                   newArr.push(parentData[i])
@@ -260,6 +266,7 @@ router.post('/product/investlist',function(req, res){ //获取产品列表
    let parentData=investlistData;
     var pageNum=req.body.pageNum||''; //2 
     var numPerPage=req.body.numPerPage||''; //10
+
    responseData.data=searchOrder(parentData,pageNum,numPerPage,req.body);
    if(responseData.data.length<=0){
       responseData.code='201';
@@ -295,6 +302,138 @@ router.post('/product/investDetail',function(req, res){ //获取产品列表
    res.json(responseData)
    return;
 })
+// 积分获取列表
+ router.post('/memberCenter/integralDetail', function (req, res) {
+     let parentData=integralData;
+     // console.log(parentData)
+     var pageNum=req.body.pageNum||''; //2 
+     var numPerPage=req.body.numPerPage||''; //10
+     var getall=req.body.getall; //条件切换
+     var date=req.body.date||null; 
+     //1  全部  2  本月  3  最近3个月
+     var type=req.body.type||null; 
+     // 1 全部  2 个人投资 3 邀请好友 4 个人注册 5 开通存管  6 完善信息
+     //默认排序按照 日期递增  
+     let newPlist=clone(parentData);
+     newPlist.sort(compareUp('date'));
+     parentData=newPlist;
+      //条件查询
+        let newP=[];
+        var b=new Date();
+        var month=b.getMonth()+1;
+
+        var types=type==2?"个人投资":type==3?"邀请好友":type==4?"个人注册":type==5?"开通存管":type==6?"完善信息":"全部";
+        for(let m=0;m<parentData.length;m++){
+              let has=true;
+              if(date!=='1'){
+                  if(date==2&&parentData[m].month!=month){
+                     has=false;
+                  }
+                  if(date==3&&(parentData[m].month>month||parentData[m].month<month-2)){
+                     has=false;
+                  }
+              }
+              if(type!=="1"&&(parentData[m].types!==types)){
+                   has=false;
+              }
+              if(has){
+                 newP.push(parentData[m])
+              }
+        }
+    parentData=newP;
+    //重新定义总条数
+    for(let i=0;i<parentData.length;i++){
+        parentData[i]["key"]=i+1;
+        parentData[i]["sumNum"]=parentData.length;
+    }
+    // 页码查询 
+    var len=parentData.length;
+    if((pageNum-1)*numPerPage+1>len){
+
+        responseData.code='201';
+        responseData.msg="无数据了";
+        responseData.data=[];
+    }else{      
+       //页码查询
+       if(req.isPage!=1){// 1不分页
+           if(parentData.length<((pageNum-1)*numPerPage)){
+              pageNum=Math.ceil((parentData.length)/((pageNum-1)*numPerPage));
+           }
+            let newArr=[];
+            let startPage=(pageNum-1)*numPerPage;
+            if(getall==='true'){
+                startPage=0;
+            }
+            for(let i=startPage;i<numPerPage*pageNum;i++){
+                 //console.log(deallistData[i])
+                 if(parentData[i]){
+                      newArr.push(parentData[i])
+                 }
+            }
+           parentData=newArr;  
+          responseData.code='200';
+          responseData.msg="成功";
+          responseData.data=parentData;
+       } 
+    }
+    
+    res.json(responseData)
+    return;
+ })
+// 积分获取列表
+ router.post('/memberCenter/gift', function (req, res) {
+     let parentData=giftData;
+     // console.log(parentData)
+     var pageNum=req.body.pageNum||''; //2 
+     var numPerPage=req.body.numPerPage||''; //10
+     var getall=req.body.getall; //条件切换
+     var date=req.body.date||null; 
+     //1  全部  2  本月  3  最近3个月
+     var type=req.body.type||null; 
+     // 1 全部  2 个人投资 3 邀请好友 4 个人注册 5 开通存管  6 完善信息
+     //默认排序按照 日期递增  
+     let newPlist=clone(parentData);
+     newPlist.sort(compareUp('use'));
+     parentData=newPlist;
+    //重新定义总条数
+    for(let i=0;i<parentData.length;i++){
+        parentData[i]["key"]=i+1;
+        parentData[i]["sumNum"]=parentData.length;
+    }
+    // 页码查询 
+    var len=parentData.length;
+    if((pageNum-1)*numPerPage+1>len){
+
+        responseData.code='201';
+        responseData.msg="无数据了";
+        responseData.data=[];
+    }else{      
+       //页码查询
+       if(req.isPage!=1){// 1不分页
+           if(parentData.length<((pageNum-1)*numPerPage)){
+              pageNum=Math.ceil((parentData.length)/((pageNum-1)*numPerPage));
+           }
+            let newArr=[];
+            let startPage=(pageNum-1)*numPerPage;
+            if(getall==='true'){
+                startPage=0;
+            }
+            for(let i=startPage;i<numPerPage*pageNum;i++){
+                 //console.log(deallistData[i])
+                 if(parentData[i]){
+                      newArr.push(parentData[i])
+                 }
+            }
+           parentData=newArr;  
+          responseData.code='200';
+          responseData.msg="成功";
+          responseData.data=parentData;
+       } 
+    }
+    
+    res.json(responseData)
+    return;
+ }) 
 
 router.post('/api/web/admin/paymentOrderList', function (req, res) {
   let parentData=deallistData;

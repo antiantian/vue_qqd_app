@@ -17,10 +17,10 @@
 					<div class="headImg box_S radius50 fl"><img src="/static/images/fish.png"/> </div>
 					<span class="fl">{{store_admin}}</span>
 				</div>
-				<a href="messCenter.html"  class="acright fr">
+				<router-link to="messCenter"  class="acright fr">
 					<img src="/static/images/zmail.png">
 					<span class="radius50">12</span>
-				</a>
+				</router-link>
 			</div>
 			<div class="accoutTop">
 				<div class="accoutAll radius50">
@@ -74,66 +74,66 @@
 	  	</div>
 		  <ul class="centerBlock clearfix">
 	        <li class="noBorderR fl box_S">
-				  <a href="investManageBiding.html">
+				  <router-link to="investManageBiding">
 					  <!--<span class="iconfont "></span>-->
 					  <img src="/static/images/InvestM.png"/>
 					  <p>投资管理</p>
-				  </a>
+				  </router-link>
 			  </li>
 			  <li class="fl box_S">
-				  <a href="fundRecord.html">
+				  <router-link to="fundRecord">
 					  <!--<span class="iconfont "></span>-->
 					  <img src="/static/images/Record.png"/>
 					  <p>投资记录</p>
-				  </a>
+				  </router-link>
 			  </li>
 			  <li class="fl  box_S">
-				  <a href="EscrowAccountNo.html">
+				  <router-link to="/shyh/escrowAccount">
 					  <!--<span class="iconfont "></span>-->
 					  <img src="/static/images/Custodyaccount.png"/>
 					  <p>托管账户</p>
-				  </a>
+				  </router-link>
 			  </li>
 	           <li class="fl noBorderR box_S">
-				  <a href="centerJXJ.html">
+				  <router-link to="centerJXJ">
 					  <!--<span class="iconfont "></span>-->
 					  <img src="/static/images/Jxj.png"/>
 					  <p>加息券</p>
-				  </a>
+				  </router-link>
 			  </li>
 	         <li class="fl box_S">
-				<a href="centerDDJ.html">
+				<router-link to="centerDDJ">
 					<!--<span class="iconfont "></span>-->
 					<img src="/static/images/Experiencegold.png"/>
 					<p>多多金</p>
-				</a>
+				</router-link>
 	         </li>
 			 <li class="fl  box_S">
-				  <a href="calender.html">
+				  <router-link to="calender">
 					  <!--<span class="iconfont "></span>-->
 					  <img src="/static/images/Clander.png"/>
 					  <p>回款日历</p>
-				  </a>
+				  </router-link>
 			  </li>
 			  <li class="noBorderb noBorderR fl box_S">
-				  <a href="mytask.html">
+				  <router-link to="/integralTask">
 					  <img src="/static/images/Mtask.png"/>
 					  <p>我的任务</p>
-				  </a>
+				  </router-link>
 			  </li>
 	          <li class="noBorderb fl box_S">
-				  <a href="zScode.html">
+				  <router-link to="zScode">
 					  <!--<span class="iconfont "></span>-->
 					  <img src="/static/images/Cinvition_03.png" />
 					  <p>我的邀请</p>
-				  </a>
+				  </router-link>
 			  </li>
 			  <li class="fl noBorderb  box_S">
-				  <a href="accoutSet.html">
+				  <router-link to="accoutSet">
 					  <!--<span class="iconfont "></span>-->
 					  <img src="/static/images/AccoutSet.png"/>
 					  <p>账户设置</p>
-				  </a>
+				  </router-link>
 			  </li>
 		  </ul>
 		</div>
